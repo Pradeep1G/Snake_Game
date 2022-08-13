@@ -18,6 +18,18 @@ def save_data():
     while len(web_entry.get()) == 0 or len(email_entry.get()) ==0 or len(password_entry.get()) == 0:
         messagebox.showerror(title="Warning", message="Please fill all the details")
         return
+    new_data = {
+        web_entry.get():{
+            "Email":email_entry.get(),
+            "Password":password_entry.get()
+        }
+    }
+    with open("data.json", mode='r') as data:
+        data_in = json.load(data)
+        print(type(data_in))
+        data_in.update(new_data)
+    with open("data.json", mode='w') as data:
+        json.dump(data_in, data, indent=4)
     with open("file1.txt", mode='a') as file1:
         file1.write(f"\n{web_entry.get()}  |   {email_entry.get()}   |   {password_entry.get()}")
     messagebox.showinfo(title="Password Manager", message="Your password has been saved.")
@@ -30,6 +42,7 @@ def save_data():
 from tkinter import *
 from tkinter import messagebox
 import random
+import json
 
 root = Tk()
 root.config(padx = 20, pady = 20)
